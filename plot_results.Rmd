@@ -20,6 +20,10 @@ We start by reading in the data and fitting linear models through the data point
 ```{r, echo=TRUE}
 df <- read_csv("./supplementary_data.csv")
 
+if(! "ratio" %in% colnames(df)){
+  df <- df %>% mutate(ratio=full_size / compressed)
+}
+
 fit.compression <- lm(I(compressed / 2^30) ~ I(full_size / 2^30):res_type + 0, df)
 fit.compression.time <- lm(compression_t ~ I(full_size / 2^20):res_type + 0, df)
 fit.decompression.time <- lm(decompression_t ~ I(full_size / 2^20):res_type + 0, df)
