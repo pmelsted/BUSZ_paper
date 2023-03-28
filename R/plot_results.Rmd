@@ -18,7 +18,7 @@ source("./helper_funcs.R")
 We start by reading in the data and fitting linear models through the data points
 
 ```{r, echo=TRUE}
-df <- read_csv("./supplementary_data.csv")
+df <- read_csv("../supplementary_data.csv")
 
 if(! "ratio" %in% colnames(df)){
   df <- df %>% mutate(ratio=full_size / compressed)
