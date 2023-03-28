@@ -1,0 +1,59 @@
+params:
+  # PFD chunk size, default 512
+  pfd: 512
+  # Chunksize, default 100000
+  N: 100000
+paths:
+  # Path to the bustools executable
+  bustools: /opt/bustools/build/src/bustools
+  # Path to the toplevel data directory
+  data_dir: path/to/experiments_dir
+  # The output directory
+  out_dir: snakemake_output
+  # The filename relative to `out_dir` to save the results
+  results: supplementary_data.csv
+
+# Define the number of files to use for each method:
+# method:   # use all available files
+# method: x # use the x largest available files
+# method: y, x # use the y smallest and x largest available files
+# Each entry in "methods" must be present in this list.
+test_size:
+  gzip_1:
+  gzip_9: 100, 50
+  zst_1:
+  zst_3:
+  zst_19: 100, 0
+  bus:
+
+# These are the methods to use for compression on the format {method}_{level}
+# if the compression method has a level parameter. Comment out a method you want to skip.
+methods:
+  - bus
+  - gzip_1
+  - gzip_9
+  - zst_1
+  - zst_3
+  - zst_19
+
+# Define the hard limits of the number of files to use.
+# The entries in "test_size" will not exceed these limits by accident.
+# A non-existent key or an empty value allows all files.
+limits:
+  bus:
+  gzip_1:
+  gzip_9: 200, 100
+  zst_19: 100, 20
+# Define a csv file to use for running a list of specific files.
+# if use is not True/true, this is ignored.
+# This is a csv file with the header:
+#   'res_type': the compression method and level, e.g. gzip_1 or bus
+#   'tissue': the name of the tissue
+#   'sample_id': the sample id
+#   'rerun': True or False (string), whether the file should be rerun or not
+# The "runall" argument ignores the 'rerun' column and reruns all.
+# By rerun, we mean the file is included as part of the workflow. Does not force Snakemake to run.
+file_list:
+  name: files_to_compress.csv
+  use: false
+  runall: false
