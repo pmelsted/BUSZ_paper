@@ -13,7 +13,7 @@ This repository contains the following files that were used to create and proces
 
 We used the following software
 
-* `bustools` version 0.40.0
+* `bustools` version 0.42.0
 * `gzip` version 1.6
 * `zstd` version 1.5.2
 * GNU `time` version 1.7
